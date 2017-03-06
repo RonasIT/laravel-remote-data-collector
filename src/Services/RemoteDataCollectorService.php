@@ -9,10 +9,11 @@
 namespace  RonasIT\Support\RemoteDataCollector\Services;
 
 
-use RonasIT\Support\AutoDoc\Exceptions\CannotFindTemporaryFileException;
+use RonasIT\Support\RemoteDataCollector\Exceptions\CannotFindTemporaryFileException;
+use RonasIT\Support\AutoDoc\Interfaces\DataCollectorInterface;
 use Illuminate\Support\Str;
 
-class RemoteDataCollectorService
+class RemoteDataCollectorService implements DataCollectorInterface
 {
     protected $remoteUrl;
     protected $tempFilePath;

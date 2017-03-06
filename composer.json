@@ -1,5 +1,5 @@
 {
-  "name": "ronasit/local-data-collector",
+  "name": "ronasit/laravel-remote-data-collector",
   "version" : "1.0.0",
   "description": "Provides service for data collecting for ronasit/laravel-swagger plugin",
   "keywords": ["laravel", "swagger", "ronasit", "auto-documentation", "rest-api"],
@@ -13,11 +13,12 @@
   "require": {
     "php": ">=5.6",
     "laravel/framework": ">=5.3.0",
+    "ronasit/laravel-swagger": "dev-master",
     "minime/annotations": "2.3.1"
   },
   "autoload": {
     "psr-4": {
-      "RonasIT\\Support\\LocalDataCollector\\": "src/"
+      "RonasIT\\Support\\RemoteDataCollector\\": "src/"
     }
   },
   "minimum-stability": "stable"
