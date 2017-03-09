@@ -18,7 +18,7 @@
   },
   "autoload": {
     "psr-4": {
-      "RonasIT\\Support\\RemoteDataCollector\\": "src/"
+      "RonasIT\\Support\\DataCollectors\\": "src/"
     }
   },
   "minimum-stability": "stable"

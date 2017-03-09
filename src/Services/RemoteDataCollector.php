@@ -6,14 +6,14 @@
  * Time: 11:28
  */
 
-namespace  RonasIT\Support\RemoteDataCollector\Services;
+namespace  RonasIT\Support\DataCollectors;
 
 
 use RonasIT\Support\RemoteDataCollector\Exceptions\CannotFindTemporaryFileException;
 use RonasIT\Support\AutoDoc\Interfaces\DataCollectorInterface;
 use Illuminate\Support\Str;
 
-class RemoteDataCollectorService implements DataCollectorInterface
+class RemoteDataCollector implements DataCollectorInterface
 {
     protected $remoteUrl;
     protected $tempFilePath;
