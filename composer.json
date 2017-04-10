@@ -1,6 +1,6 @@
 {
   "name": "ronasit/laravel-remote-data-collector",
-  "version" : "0.0.1",
+  "version" : "0.0.2",
   "description": "Provides service for data collecting for ronasit/laravel-swagger plugin",
   "keywords": ["laravel", "swagger", "ronasit", "auto-documentation", "rest-api"],
   "license": "MIT",
