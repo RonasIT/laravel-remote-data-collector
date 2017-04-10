@@ -1,6 +1,6 @@
 <?php
 
-namespace RonasIT\Support\RemoteDataCollector;
+namespace RonasIT\Support\DataCollectors;
 
 use Illuminate\Support\ServiceProvider;
 
