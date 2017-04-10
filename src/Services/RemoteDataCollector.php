@@ -8,58 +8,60 @@
 
 namespace  RonasIT\Support\DataCollectors;
 
-
-use RonasIT\Support\RemoteDataCollector\Exceptions\CannotFindTemporaryFileException;
+use RonasIT\Support\AutoDoc\Exceptions\CannotFindTemporaryFileException;
 use RonasIT\Support\AutoDoc\Interfaces\DataCollectorInterface;
-use Illuminate\Support\Str;
+use RonasIT\Support\Services\HttpRequestService;
 
+/**
+ * @property HttpRequestService $httpRequestService
+*/
 class RemoteDataCollector implements DataCollectorInterface
 {
     protected $remoteUrl;
     protected $tempFilePath;
     protected $key;
+    protected $httpRequestService;
 
     public function __construct()
     {
-        $this->tempfilePath = config('remote-data-collector.temporary_path');
+        $this->tempFilePath = config('remote-data-collector.temporary_path');
         $this->key = config('remote-data-collector.key');
-        $this->remoteUrl = config('remote-data-collector.url')."/{$this->key}";
+        $this->remoteUrl = config('remote-data-collector.url');
+
+        $this->httpRequestService = app(HttpRequestService::class);
 
         if (empty($this->tempfilePath)) {
             throw new CannotFindTemporaryFileException();
         }
     }
 
-    public function saveData($tempFile){
-        $this->tempfilePath = $tempFile;
+    public function saveTmpData($tempData) {
+        $data = json_encode($tempData);
 
-        $this->makeRequest();
+        file_put_contents($this->tempFilePath, $data);
     }
 
-    public function getFileContent() {
-        $content = json_decode(file_get_contents($this->remoteUrl), true);
+    public function getTmpData() {
+        if (file_exists($this->tempFilePath)) {
+            $content = file_get_contents($this->tempFilePath);
 
-        return json_decode($content['document']);
-    }
-
-    protected function makeRequest() {
-        $curl = curl_init();
-
-        curl_setopt_array($curl, [
-            CURLOPT_URL => $this->remoteUrl,
-            CURLOPT_POST => 1,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_POSTFIELDS => [
-                'document' => file_get_contents($this->tempfilePath),
-            ]
-        ]);
-
-        $response = curl_exec($curl);
-
-        if (curl_error($curl)) {
-            throw new CurlRequestErrorException();
-        } else {
-            curl_close($curl);
+            return json_decode($content, true);
         }
+
+        return null;
+    }
+
+    public function saveData($data) {
+        $this->httpRequestService->sendPost($this->getUrl(), $data);
+    }
+
+    public function getDocumentation() {
+        $response = $this->httpRequestService->sendGet($this->getUrl());
+
+        return $this->httpRequestService->parseJsonResponse($response);
+    }
+
+    protected function getUrl() {
+        return "{$this->remoteUrl}/{$this->key}";
     }
 }
