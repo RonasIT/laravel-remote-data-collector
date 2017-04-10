@@ -29,10 +29,6 @@ class RemoteDataCollector implements DataCollectorInterface
         $this->remoteUrl = config('remote-data-collector.url');
 
         $this->httpRequestService = app(HttpRequestService::class);
-
-        if (empty($this->tempfilePath)) {
-            throw new CannotFindTemporaryFileException();
-        }
     }
 
     public function saveTmpData($tempData) {
@@ -53,6 +49,10 @@ class RemoteDataCollector implements DataCollectorInterface
 
     public function saveData($data) {
         $this->httpRequestService->sendPost($this->getUrl(), $data);
+
+        if (file_exists($this->tempFilePath)) {
+            unlink($this->tempFilePath);
+        }
     }
 
     public function getDocumentation() {
@@ -62,6 +62,6 @@ class RemoteDataCollector implements DataCollectorInterface
     }
 
     protected function getUrl() {
-        return "{$this->remoteUrl}/{$this->key}";
+        return "{$this->remoteUrl}/documentations/{$this->key}";
     }
 }
