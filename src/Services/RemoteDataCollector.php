@@ -48,7 +48,11 @@ class RemoteDataCollector implements DataCollectorInterface
     }
 
     public function saveData($data) {
-        $this->httpRequestService->sendPost($this->getUrl(), json_encode($data), ['Content-Type'=> 'application/json']);
+        $this->httpRequestService->sendPost(
+            $this->getUrl(),
+            $data,
+            ['Content-Type' => 'application/json']
+        );
 
         if (file_exists($this->tempFilePath)) {
             unlink($this->tempFilePath);
