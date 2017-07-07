@@ -47,7 +47,9 @@ class RemoteDataCollector implements DataCollectorInterface
         return null;
     }
 
-    public function saveData($data) {
+    public function saveData() {
+        $data = $this->getTmpData();
+
         $this->httpRequestService->sendPost(
             $this->getUrl(),
             $data,
