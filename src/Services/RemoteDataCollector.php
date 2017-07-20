@@ -32,7 +32,7 @@ class RemoteDataCollector implements DataCollectorInterface
     }
 
     public function saveTmpData($tempData) {
-        $data = json_encode($tempData);
+        $data = serialize($tempData);
 
         file_put_contents($this->tempFilePath, $data);
     }
@@ -41,7 +41,7 @@ class RemoteDataCollector implements DataCollectorInterface
         if (file_exists($this->tempFilePath)) {
             $content = file_get_contents($this->tempFilePath);
 
-            return json_decode($content, true);
+            return unserialize($content);
         }
 
         return null;
