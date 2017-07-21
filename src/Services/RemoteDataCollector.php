@@ -22,6 +22,8 @@ class RemoteDataCollector implements DataCollectorInterface
     protected $key;
     protected $httpRequestService;
 
+    protected static $data = [];
+
     public function __construct()
     {
         $this->tempFilePath = config('remote-data-collector.temporary_path');
@@ -31,34 +33,23 @@ class RemoteDataCollector implements DataCollectorInterface
         $this->httpRequestService = app(HttpRequestService::class);
     }
 
-    public function saveTmpData($tempData) {
-        $data = serialize($tempData);
-
-        file_put_contents($this->tempFilePath, $data);
+    public function saveTmpData($tempData)
+    {
+        self::$data = $tempData;
     }
 
     public function getTmpData() {
-        if (file_exists($this->tempFilePath)) {
-            $content = file_get_contents($this->tempFilePath);
-
-            return unserialize($content);
-        }
-
-        return null;
+        return self::$data;
     }
 
     public function saveData() {
-        $data = $this->getTmpData();
-
         $this->httpRequestService->sendPost(
             $this->getUrl(),
-            $data,
+            self::$data,
             ['Content-Type' => 'application/json']
         );
 
-        if (file_exists($this->tempFilePath)) {
-            unlink($this->tempFilePath);
-        }
+        self::$data = [];
     }
 
     public function getDocumentation() {
