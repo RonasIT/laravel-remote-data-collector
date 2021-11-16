@@ -1,12 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: artem
- * Date: 25.02.17
- * Time: 11:28
- */
 
-namespace  RonasIT\Support\DataCollectors;
+namespace RonasIT\Support\DataCollectors;
 
 use RonasIT\Support\AutoDoc\Exceptions\CannotFindTemporaryFileException;
 use RonasIT\Support\AutoDoc\Interfaces\DataCollectorInterface;
@@ -14,7 +8,7 @@ use RonasIT\Support\Services\HttpRequestService;
 
 /**
  * @property HttpRequestService $httpRequestService
-*/
+ */
 class RemoteDataCollector implements DataCollectorInterface
 {
     protected $remoteUrl;
@@ -31,13 +25,15 @@ class RemoteDataCollector implements DataCollectorInterface
         $this->httpRequestService = app(HttpRequestService::class);
     }
 
-    public function saveTmpData($tempData) {
+    public function saveTmpData($tempData)
+    {
         $data = json_encode($tempData);
 
         file_put_contents($this->tempFilePath, $data);
     }
 
-    public function getTmpData() {
+    public function getTmpData()
+    {
         if (file_exists($this->tempFilePath)) {
             $content = file_get_contents($this->tempFilePath);
 
@@ -47,7 +43,8 @@ class RemoteDataCollector implements DataCollectorInterface
         return null;
     }
 
-    public function saveData($data) {
+    public function saveData($data)
+    {
         $this->httpRequestService->sendPost(
             $this->getUrl(),
             $data,
@@ -59,13 +56,15 @@ class RemoteDataCollector implements DataCollectorInterface
         }
     }
 
-    public function getDocumentation() {
+    public function getDocumentation()
+    {
         $response = $this->httpRequestService->sendGet($this->getUrl());
 
         return $this->httpRequestService->parseJsonResponse($response);
     }
 
-    protected function getUrl() {
+    protected function getUrl()
+    {
         return "{$this->remoteUrl}/documentations/{$this->key}";
     }
 }
