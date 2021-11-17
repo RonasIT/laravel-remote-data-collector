@@ -6,12 +6,12 @@ This package is used as a driver for the 'laravel-swagger' package.
 
 ### Composer
  1. Add to required `"ronasit/laravel-remote-data-collector": "master"`
- 2. Run `composer update`
+ 1. Run `composer update`
 
 ### Laravel
  1. Add **RemoteDataCollectorServiceProvider::class** to providers in *config/app.php*
- 2. Add **RemoteDataCollector::class as value to key 'data_collector'** in *config/auto-doc.php*
- 3. Run `php artisan vendor:publish`
+ 1. Add **RemoteDataCollector::class as value to key 'data_collector'** in *config/auto-doc.php*
+ 1. Run `php artisan vendor:publish`
  
 ### ENV
  In *.env* file you should add following lines
