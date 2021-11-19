@@ -16,8 +16,7 @@ This package is used as a driver for the 'laravel-swagger' package.
 ### ENV
  In *.env* file you should add following lines
     `
-    DATA_COLLECTOR_KEY=/example-text
-    LOCAL_DATA_COLLECTOR_TEMP_PATH=/example-folder/documentation.json
+    DATA_COLLECTOR_KEY=some_project_name
     `
 
 ### config - remote-data-collector
