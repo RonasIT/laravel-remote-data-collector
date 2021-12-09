@@ -45,7 +45,7 @@ class RemoteDataCollector implements DataCollectorInterface
 
     public function saveData()
     {
-        $this->httpRequestService->post(
+        $this->httpRequestService->sendPost(
             $this->getUrl(),
             $this->getTmpData(),
             ['Content-Type' => 'application/json']
