@@ -45,11 +45,9 @@ class RemoteDataCollector implements DataCollectorInterface
 
     public function saveData()
     {
-        $this->httpRequestService->post(
-            $this->getUrl(),
-            $this->getTmpData(),
-            ['Content-Type' => 'application/json']
-        );
+        $this->httpRequestService->post($this->getUrl(), $this->getTmpData(), [
+            'Content-Type' => 'application/json'
+        ]);
 
         if (file_exists($this->tempFilePath)) {
             unlink($this->tempFilePath);
@@ -58,9 +56,9 @@ class RemoteDataCollector implements DataCollectorInterface
 
     public function getDocumentation()
     {
-        $response = $this->httpRequestService->sendGet($this->getUrl());
-
-        return $this->httpRequestService->parseJsonResponse($response);
+        return $this->httpRequestService
+            ->get($this->getUrl())
+            ->json();
     }
 
     protected function getUrl()
