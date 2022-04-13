@@ -13,7 +13,7 @@
     "php": ">=5.6",
     "laravel/framework": ">=5.3.0",
     "ronasit/laravel-swagger": "1.6.*",
-    "ronasit/laravel-helpers": "2.0.1-beta"
+    "ronasit/laravel-helpers": ">=2.0.1-beta"
   },
   "autoload": {
     "psr-4": {
